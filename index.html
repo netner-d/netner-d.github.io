@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>net_nerd 🤓</title>
+  <meta name="author" content="NetNerd">
+  <meta name="description" content="Louis Michalak's personal website">
+  <link rel="stylesheet" href="/reset.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&family=Overpass:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --background-color: #FEFDFF;
+      --text-color: #0B032D;
+      --secondary-color: #C1BFB5;
+    }
+
+    html {
+      font-family: 'Roboto Mono', monospace;
+      color: var(--text-color);
+      background-color: var(--background-color);
+      margin: 0;
+      padding: 0;
+
+      min-height: 100vh;
+      min-width: 100vw;
+    }
+
+    a:before {
+      content: '{';
+    }
+
+    a:after {
+      content: '}';
+    }
+
+    a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      color: var(--background-color);
+      background-color: var(--text-color);
+    }
+
+    a.title {
+      font-size: 1.5rem;
+      position: absolute;
+      opacity: 0;
+    }
+
+    main {
+      display: none;
+      position: absolute;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 1rem;
+      top: 100px;
+      width: 100vw;
+    }
+  </style>
+</head>
+
+<body>
+  <a hidden class="title" href="/">net_nerd</a>
+
+  <main>
+    <h1>net_nerd</h1>
+    <p>stop playing with <a target="_blank" href="https://www.linkedin.com/in/louis-michalak/">my</a> website I'm trying
+      to build
+      something serious here</p>
+
+    <a onclick="localStorage.setItem('visitCount', 0)" href="/">🫶</a>
+  </main>
+
+  <script>
+    const lastVisit = new Date(localStorage.getItem('lastVisit') || new Date());
+    localStorage.setItem('lastVisit', Date.now().toString());
+    if (lastVisit > Date.now() - 1000 * 60 * 60 * 24) {
+      localStorage.setItem('visitCount', 0);
+    }
+    const visitCount = localStorage.getItem('visitCount') || 0;
+    localStorage.setItem('visitCount', parseInt(visitCount) + 1);
+    // Randomly place .title on the page
+    document.onreadystatechange = () => {
+      if (document.readyState === 'complete') {
+        if (visitCount > 4) {
+          document.querySelector('main').style.display = 'flex';
+          return;
+        }
+        /**
+          * @type {HTMLAnchorElement}
+          */
+        const title = document.querySelector('.title');
+        title.hidden = false;
+        const xInterval = Math.floor(((window.innerWidth - title.offsetWidth) / window.innerWidth) * 100);
+        const yInterval = Math.floor(((window.innerHeight - title.offsetHeight) / window.innerHeight) * 100);
+        const randomX = Math.floor(Math.random() * xInterval);
+        const randomY = Math.floor(Math.random() * yInterval);
+        title.style.opacity = 1;
+        title.style.top = `${randomY}%`;
+        title.style.left = `${randomX}%`;
+      }
+    }
+  </script>
+</body>
+
+</html>
